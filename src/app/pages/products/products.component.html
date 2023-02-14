@@ -1,0 +1,12 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20" *ngFor="let page of pageItems">
+  <div class="page-divider page-divider-{{page.number}}" fxLayoutAlign="center">- Page {{ page.number }} -</div>
+  <div class="container">
+    <app-item-list fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="center" fxLayoutGap="0"
+      [items]="page.content"></app-item-list>
+  </div>
+</div>
+<div fxLayoutAlign="center">
+  <button mat-stroked-button color="primary" *ngIf="!isLoading" (click)="loadData()">Load Page {{page}}</button>
+  <p *ngIf="isLoading">Loading Page {{page}} ...</p>
+</div>
+<br /><br />

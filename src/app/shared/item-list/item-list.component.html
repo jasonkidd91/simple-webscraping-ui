@@ -1,0 +1,31 @@
+<div class="item item-{{i}}" fxFlex="33" fxLayoutAlign="center" *ngFor="let item of items; let i = index">
+  <mat-card class="catalog-item-card">
+    <img mat-card-image [src]="item.imageUrl" alt="" data-max-retry="5" data-retry="0" (error)="waitAndReload($event)">
+    <mat-card-content>
+      <mat-card-title><a class="item-code" target="_blank" [href]="item.codeUrl">{{ item.code }}</a></mat-card-title>
+      <mat-card-subtitle>{{ item.title }}</mat-card-subtitle>
+      <p>{{ item.date | date:'yyyy-MM-dd' }}</p>
+      <p>
+        <span *ngIf="!item.tags || item.Tag.length <= 0">-</span>
+        <ng-container *ngIf="item.Tag && item.Tag.length > 0">
+          <ng-container *ngFor="let tag of item.Tag">
+            <a [routerLink]="'/products/' + tag.name" style="user-select:text;" mat-flat-button
+              color="warn">{{ tag.name }}</a>
+            &nbsp;&nbsp;
+          </ng-container>
+        </ng-container>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- <button mat-button color="warn">
+        <mat-icon>open_in_new</mat-icon> OPEN
+      </button> -->
+      <button mat-button color="primary" (click)="addCart(item)" *ngIf="!exists(item)">
+        <mat-icon>shopping_cart</mat-icon> ADD TO CART
+      </button>
+      <button mat-button color="warn" (click)="removeCart(item)" *ngIf="exists(item)">
+        <mat-icon>remove_shopping_cart</mat-icon> REMOVE FROM CART
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
